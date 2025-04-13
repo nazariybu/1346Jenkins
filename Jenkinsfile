@@ -1,5 +1,5 @@
 pipeline {
-    agent jenkins-agent
+    agent any
     
     environment {
         // Remote server configuration
