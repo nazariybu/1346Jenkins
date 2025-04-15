@@ -35,6 +35,24 @@ pipeline {
         }
     }
 
+    stage('Check Apache Logs') {
+            steps {
+                script {
+                    // Перевірка логів на 4xx/5xx помилки
+                    def errors = sh(script: 'grep -E " 4[0-9]{2} | 5[0-9]{2} " /var/log/apache2/error.log | wc -l', returnStdout: true).trim()
+                    if (errors != "0") {
+                        echo "Знайдено помилки в логах Apache!"
+                        // Можна вивести деталі:
+                        sh 'grep -E " 4[0-9]{2} | 5[0-9]{2} " /var/log/apache2/error.log'
+                        // Якщо потрібно "фейлити" білд:
+                        // error("Знайдено помилки в логах Apache!")
+                    } else {
+                        echo "Помилок 4xx/5xx не знайдено."
+                    }
+                }
+            }
+        }
+    
     post {
         always {
             echo 'Apache2 installation process completed'
