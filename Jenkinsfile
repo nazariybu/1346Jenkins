@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {lable 'ubuntu24'}
 
     stages {
         stage('Install Apache2') {
