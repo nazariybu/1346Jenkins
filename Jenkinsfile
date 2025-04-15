@@ -33,8 +33,7 @@ pipeline {
                 }
             }
         }
-    }
-
+        
         stage('Check Apache Logs') {
             steps {
                 script {
@@ -52,6 +51,7 @@ pipeline {
                 }
             }
         }
+    }
     
     post {
         always {
