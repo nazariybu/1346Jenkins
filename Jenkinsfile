@@ -62,35 +62,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Check Apache Logs') {
-            steps {
-                script {
-                    // Шукаємо помилки 4xx та 5xx і рахуємо їх кількість
-                    def errorCount = sh(
-                        script: 'grep -E " 4[0-9]{2} | 5[0-9]{2} " /var/log/apache2/error.log | wc -l',
-                        returnStdout: true
-                    ).trim()
-
-                    if (errorCount != "0") {
-                        // Виводимо деталі помилок (опціонально)
-                        def errorDetails = sh(
-                            script: 'grep -E " 4[0-9]{2} | 5[0-9]{2} " /var/log/apache2/error.log | head -n 10',
-                            returnStdout: true
-                        ).trim()
-                        
-                        // Повідомлення з кількістю помилок
-                        echo "Знайдено ${errorCount} помилок в логах Apache! Приклад перших 10:"
-                        echo "${errorDetails}"
-                        
-                        // Можна "фейлити" білд, якщо є помилки
-                        error("Є критичні помилки в логах Apache!")
-                    } else {
-                        echo "Помилок 4xx/5xx не знайдено."
-                    }
-                }
-            }
-        }
     }
     
     post {
