@@ -35,7 +35,7 @@ pipeline {
         }
     }
 
-    stage('Check Apache Logs') {
+        stage('Check Apache Logs') {
             steps {
                 script {
                     // Перевірка логів на 4xx/5xx помилки
@@ -51,7 +51,7 @@ pipeline {
                     }
                 }
             }
-    }
+        }
     
     post {
         always {
