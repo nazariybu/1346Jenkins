@@ -39,14 +39,14 @@ pipeline {
                 script {
                     // Шукаємо помилки 4xx та 5xx і рахуємо їх кількість
                     def errorCount = sh(
-                        script: 'grep -E " 4[0-9]{2} | 5[0-9]{2} " /var/log/apache2/error.log | wc -l',
+                        script: 'grep -E " 4[0-9]{2} | 5[0-9]{2} " /var/log/apache2/access.log | wc -l',
                         returnStdout: true
                     ).trim()
 
                     if (errorCount != "0") {
                         // Виводимо деталі помилок (опціонально)
                         def errorDetails = sh(
-                            script: 'grep -E " 4[0-9]{2} | 5[0-9]{2} " /var/log/apache2/error.log | head -n 10',
+                            script: 'grep -E " 4[0-9]{2} | 5[0-9]{2} " /var/log/apache2/access.log | head -n 10',
                             returnStdout: true
                         ).trim()
                         
